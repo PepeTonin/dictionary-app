@@ -1,0 +1,9 @@
+export interface GetWordsParams {
+  page: number;
+  limit: number;
+}
+
+export interface WordResponse {
+  id: number;
+  word: string;
+}
