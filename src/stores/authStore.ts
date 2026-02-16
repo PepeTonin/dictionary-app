@@ -1,31 +1,40 @@
 import { create } from "zustand";
 
+import { logout, signIn, signUp } from "@/services/supabase/auth";
 interface AuthStore {
   user: object | null;
-  setUser: (user: object | null) => void;
-  isAuthenticated: boolean;
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
   token: string | null;
-  setToken: (token: string | null) => void;
-  login: (email: string, password: string) => void;
-  register: (email: string, password: string) => void;
-  logout: () => void;
+  isAuthenticated: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  register: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
-  isAuthenticated: false,
-  setIsAuthenticated: (isAuthenticated: boolean) => set({ isAuthenticated }),
   user: null,
-  setUser: (user: object | null) => set({ user }),
+  isAuthenticated: false,
   token: null,
-  setToken: (token: string | null) => set({ token }),
-  login: (email: string, password: string) => {
-    set({ isAuthenticated: true });
+  login: async (email: string, password: string) => {
+    try {
+      const { user, session } = await signIn(email, password);
+      set({ isAuthenticated: true, user, token: session?.access_token });
+    } catch (error) {
+      throw error;
+    }
   },
-  register: (email: string, password: string) => {
-    set({ isAuthenticated: true });
+  register: async (email: string, password: string) => {
+    try {
+      await signUp(email, password);
+    } catch (error) {
+      throw error;
+    }
   },
-  logout: () => {
-    set({ isAuthenticated: false });
+  logout: async () => {
+    try {
+      await logout();
+      set({ isAuthenticated: false, user: null, token: null });
+    } catch (error) {
+      throw error;
+    }
   },
 }));
