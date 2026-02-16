@@ -1,5 +1,5 @@
 import { dictionaryClient } from "@/services/apis/dictionaryClient";
-import type { WordDetailResponse } from "@/types/wordDetail";
+import type { WordDetailResponse } from "@/services/supabase/models/wordDetail";
 import { useQuery } from "@tanstack/react-query";
 
 export function useWordDetail(word: string) {

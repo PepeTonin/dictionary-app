@@ -1,4 +1,4 @@
-import { GetWordsParams, WordResponse } from "@/types/words";
+import { GetWordsParams, WordResponse } from "@/services/supabase/models/words";
 import { supabaseRestClient } from "./client";
 
 export async function getWords({ page, limit }: GetWordsParams) {
