@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 8,
+    height: 24,
   },
   buttonText: {
     fontSize: 16,
