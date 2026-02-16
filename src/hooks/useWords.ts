@@ -12,7 +12,7 @@ export function useWords() {
   } = useInfiniteQuery({
     queryKey: ["words"],
     queryFn: async ({ pageParam = 1 }) => {
-      return getWords({ page: pageParam, limit: 100 });
+      return getWords({ page: pageParam, limit: 75 });
     },
     getNextPageParam: (lastPage, pages) =>
       lastPage.length > 0 ? pages.length + 1 : undefined,
