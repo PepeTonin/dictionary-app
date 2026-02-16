@@ -1,8 +1,9 @@
-import { Header } from "@/components/common/Header";
-import { AntDesign } from "@expo/vector-icons";
-import { Tabs } from "expo-router";
 import { Text } from "react-native";
+import { Tabs } from "expo-router";
+import { AntDesign } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { Header } from "@/components/common/Header";
 
 export default function TabsLayout() {
   const titles = {
