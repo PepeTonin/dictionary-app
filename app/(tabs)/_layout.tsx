@@ -1,4 +1,4 @@
-import { Header } from "@/components/Header";
+import { Header } from "@/components/common/Header";
 import { AntDesign } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import { Text } from "react-native";

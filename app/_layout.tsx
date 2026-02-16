@@ -1,4 +1,4 @@
-import { Header } from "@/components/Header";
+import { Header } from "@/components/common/Header";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
