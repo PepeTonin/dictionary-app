@@ -1,3 +1,4 @@
+import { Header } from "@/components/Header";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
@@ -27,7 +28,20 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="word" options={{ headerShown: true }} />
+        <Stack.Screen
+          name="word"
+          options={{
+            headerShown: true,
+            header: () => <Header type="showClose" />,
+          }}
+        />
+        <Stack.Screen
+          name="(auth)"
+          options={{
+            headerShown: true,
+            header: () => <Header type="showBack" />,
+          }}
+        />
       </Stack>
     </QueryClientProvider>
   );
