@@ -62,7 +62,6 @@ export function WordsListScreen() {
         onScroll={handleScroll}
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}
-        style={styles.listContainer}
         contentContainerStyle={styles.listContentContainer}
         columnWrapperStyle={styles.listColumnWrapperContainer}
         renderItem={({ item, index }) => (
