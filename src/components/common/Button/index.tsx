@@ -11,9 +11,10 @@ import {
 import { styles } from "./style";
 
 interface ButtonProps extends TouchableOpacityProps {
-  type: "primary" | "ghost";
+  type: "primary" | "ghost" | "outline";
   label: string;
   isLoading?: boolean;
+  fullWidth?: boolean;
 }
 
 export function Button({
@@ -21,6 +22,7 @@ export function Button({
   label,
   isLoading,
   disabled,
+  fullWidth = true,
   ...props
 }: ButtonProps) {
   const showDisabledUi = isLoading || disabled;
@@ -31,6 +33,7 @@ export function Button({
   > = {
     primary: styles.primaryContainer,
     ghost: styles.ghostContainer,
+    outline: styles.outlineContainer,
   };
 
   const mapTypeToStyleLabel: Record<
@@ -39,12 +42,14 @@ export function Button({
   > = {
     primary: styles.primaryLabel,
     ghost: styles.ghostLabel,
+    outline: styles.outlineLabel,
   };
 
   return (
     <TouchableOpacity
       style={[
         styles.container,
+        fullWidth ? styles.fullWidthContainer : styles.flexContainer,
         mapTypeToStyleContainer[type],
         showDisabledUi && styles.disabledContainer,
       ]}

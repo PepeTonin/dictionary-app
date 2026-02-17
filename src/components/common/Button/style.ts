@@ -2,17 +2,27 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
-    width: "100%",
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
     minHeight: 42,
+  },
+  fullWidthContainer: {
+    width: "100%",
+  },
+  flexContainer: {
+    flex: 1,
   },
   primaryContainer: {
     backgroundColor: "gray",
   },
   ghostContainer: {
     backgroundColor: "transparent",
+  },
+  outlineContainer: {
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    borderColor: "gray",
   },
   disabledContainer: {
     opacity: 0.5,
@@ -25,6 +35,9 @@ export const styles = StyleSheet.create({
     color: "white",
   },
   ghostLabel: {
+    color: "black",
+  },
+  outlineLabel: {
     color: "black",
   },
 });
