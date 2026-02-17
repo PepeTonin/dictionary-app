@@ -5,24 +5,31 @@ import {
   NativeSyntheticEvent,
 } from "react-native";
 
+import { ScreenError } from "@/components/common/ScreenError";
+import { ScreenLoader } from "@/components/common/ScreenLoader";
 import { FloatingButton } from "@/components/wordsList/FloatingButton";
 import { FooterLoader } from "@/components/wordsList/FooterLoader";
 import { WordItem } from "@/components/wordsList/WordItem";
 
+import { WORDS_LIST_NUM_COLUMNS } from "@/constants/wordsList";
 import { useWords } from "@/hooks/useWords";
-
 import { WordResponse } from "@/services/supabase/models/words";
 
-import { WORDS_LIST_NUM_COLUMNS } from "@/constants/wordsList";
-
-import { ScreenLoader } from "@/components/common/ScreenLoader";
 import { styles } from "./style";
 
 const SCROLL_TO_TOP_THRESHOLD = 200;
 
 export function WordsListScreen() {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useWords();
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    refetch,
+    isRefetching,
+  } = useWords();
 
   const flatListRef = useRef<FlatList<WordResponse>>(null);
 
@@ -50,6 +57,31 @@ export function WordsListScreen() {
     return <ScreenLoader />;
   }
 
+  if (error) {
+    return (
+      <ScreenError
+        hasTabBar={true}
+        title="Error loading words"
+        description="Try again later"
+        buttonLabel="Try again"
+        onButtonPress={() => refetch()}
+        isLoading={isRefetching}
+      />
+    );
+  }
+
+  const words = data?.pages.flatMap((page) => page.map((word) => word)) || [];
+
+  if (words.length === 0) {
+    return (
+      <ScreenError
+        hasTabBar={true}
+        title="No words found"
+        description="Try again later"
+      />
+    );
+  }
+
   return (
     <>
       {showScrollToTop && (
@@ -57,7 +89,7 @@ export function WordsListScreen() {
       )}
       <FlatList
         ref={flatListRef}
-        data={data?.pages.flatMap((page) => page.map((word) => word)) || []}
+        data={words}
         keyExtractor={(item) => item.id.toString()}
         numColumns={WORDS_LIST_NUM_COLUMNS}
         onScroll={handleScroll}

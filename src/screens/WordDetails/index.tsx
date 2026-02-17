@@ -12,9 +12,9 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Button } from "@/components/common/Button";
+import { ScreenError } from "@/components/common/ScreenError";
 import { ScreenLoader } from "@/components/common/ScreenLoader";
 import { NotFound } from "@/components/wordDetails/NotFound";
-import { WordDetailsError } from "@/components/wordDetails/WordDetailsError";
 
 import { useFavoriteWord } from "@/hooks/favorites/useFavoriteWord";
 import { useIsWordFavorite } from "@/hooks/favorites/useIsWordFavorite";
@@ -53,6 +53,14 @@ export function WordDetailsScreen() {
     addToFavorites(word);
   }
 
+  function handleRefetch() {
+    if (canRefetch) {
+      refetch();
+      return;
+    }
+    router.back();
+  }
+
   const isFavoriteLoading = isMutatingFavorite || isCheckingFavorite;
 
   if (isLoadingWordDetails) {
@@ -70,11 +78,13 @@ export function WordDetailsScreen() {
 
   if (!data || data.length === 0 || wordDetailsError) {
     return (
-      <WordDetailsError
-        word={word}
-        canRefetch={canRefetch}
-        refetch={refetch}
-        isRefetching={isRefetching}
+      <ScreenError
+        hasTabBar={false}
+        title="No data found for this word"
+        description="Try looking for another word."
+        buttonLabel={canRefetch ? "Try again" : "Back"}
+        onButtonPress={handleRefetch}
+        isLoading={isRefetching}
       />
     );
   }

@@ -3,22 +3,28 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 16,
+    paddingTop: 32,
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    gap: 16,
   },
-  wordContainer: {
+  textContainer: {
     flex: 1,
     gap: 8,
-    alignItems: "center",
   },
-  wordText: {
+  titleContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 8,
+  },
+  title: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
   },
-  regularText: {
-    fontSize: 16,
+  description: {
     textAlign: "center",
+    fontSize: 16,
   },
 });

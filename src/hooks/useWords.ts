@@ -9,6 +9,8 @@ export function useWords() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    refetch,
+    isRefetching,
   } = useInfiniteQuery({
     queryKey: ["words"],
     queryFn: async ({ pageParam = 1 }) => {
@@ -24,5 +26,7 @@ export function useWords() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    refetch,
+    isRefetching,
   };
 }
