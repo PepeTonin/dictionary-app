@@ -1,6 +1,8 @@
 import { getFavorites } from "@/services/supabase/words";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
+const FAVORITES_LIMIT = 30;
+
 export function useFavorites() {
   const {
     data,
@@ -14,7 +16,7 @@ export function useFavorites() {
   } = useInfiniteQuery({
     queryKey: ["favorites"],
     queryFn: async ({ pageParam = 1 }) => {
-      return getFavorites({ page: pageParam, limit: 75 });
+      return getFavorites({ page: pageParam, limit: FAVORITES_LIMIT });
     },
     getNextPageParam: (lastPage, pages) =>
       lastPage.length > 0 ? pages.length + 1 : undefined,
