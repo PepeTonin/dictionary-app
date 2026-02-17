@@ -2,6 +2,10 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
     position: "absolute",
     bottom: 16,
     right: 32,
@@ -12,7 +16,7 @@ export const styles = StyleSheet.create({
     opacity: 0.7,
   },
   label: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
     color: "white",
   },
