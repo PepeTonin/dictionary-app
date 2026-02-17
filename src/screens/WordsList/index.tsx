@@ -5,10 +5,10 @@ import {
   NativeSyntheticEvent,
 } from "react-native";
 
+import { FooterLoader } from "@/components/common/FooterLoader";
 import { ScreenError } from "@/components/common/ScreenError";
 import { ScreenLoader } from "@/components/common/ScreenLoader";
 import { FloatingButton } from "@/components/wordsList/FloatingButton";
-import { FooterLoader } from "@/components/wordsList/FooterLoader";
 import { WordItem } from "@/components/wordsList/WordItem";
 
 import { WORDS_LIST_NUM_COLUMNS } from "@/constants/wordsList";
