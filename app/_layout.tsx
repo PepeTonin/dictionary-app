@@ -6,14 +6,26 @@ import ToastManager from "toastify-react-native";
 
 import { Header } from "@/components/common/Header";
 
+import { useAuthStore } from "@/stores/authStore";
+
 const queryClient = new QueryClient();
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const { initialize, isLoading } = useAuthStore();
+
   useEffect(() => {
-    SplashScreen.hideAsync();
-  }, []);
+    async function initializeAuth() {
+      await initialize();
+      SplashScreen.hideAsync();
+    }
+    initializeAuth();
+  }, [initialize]);
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <QueryClientProvider client={queryClient}>
