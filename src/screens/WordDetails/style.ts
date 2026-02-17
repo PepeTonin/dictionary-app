@@ -25,20 +25,24 @@ export const styles = StyleSheet.create({
     backgroundColor: "lightgray",
   },
   favoriteButtonContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    height: 42,
+    width: 120,
     backgroundColor: "lightgray",
     borderRadius: 8,
-    alignSelf: "flex-end",
     gap: 4,
-    alignItems: "center",
     flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "flex-end",
   },
   sectionContainer: {
     gap: 4,
   },
   sectionItemContainer: {
     gap: 2,
+    borderBottomWidth: 1,
+    borderColor: "lightgray",
+    paddingBottom: 2,
   },
   h1: {
     fontSize: 24,

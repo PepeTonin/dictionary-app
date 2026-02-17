@@ -1,8 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import { AxiosError } from "axios";
 import { router, useLocalSearchParams } from "expo-router";
-import { useState } from "react";
 import {
+  ActivityIndicator,
   Linking,
   ScrollView,
   Text,
@@ -16,40 +16,59 @@ import { NotFound } from "@/components/wordDetails/NotFound";
 import { ScreenLoader } from "@/components/wordDetails/ScreenLoader";
 import { WordDetailsError } from "@/components/wordDetails/WordDetailsError";
 
+import { useFavoriteWord } from "@/hooks/favorites/useFavoriteWord";
+import { useIsWordFavorite } from "@/hooks/favorites/useIsWordFavorite";
 import { useWordDetail } from "@/hooks/useWordDetail";
+
+import { capitalizeFirstLetter } from "@/utils/string";
 
 import { styles } from "./style";
 
 export function WordDetailsScreen() {
   const { bottom } = useSafeAreaInsets();
   const { word } = useLocalSearchParams<{ word: string }>();
-  const { data, isLoading, error, refetch, isRefetching, canRefetch } =
-    useWordDetail(word);
 
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const {
+    data,
+    isLoading: isLoadingWordDetails,
+    error: wordDetailsError,
+    refetch,
+    isRefetching,
+    canRefetch,
+  } = useWordDetail(word);
 
-  function capitalizeFirstLetter(word: string) {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  }
+  const {
+    addToFavorites,
+    removeFromFavorites,
+    isLoading: isMutatingFavorite,
+  } = useFavoriteWord();
+
+  const { isFavorite, isLoading: isCheckingFavorite } = useIsWordFavorite(word);
 
   function handleFavorite() {
-    setIsFavorite(!isFavorite);
+    if (isFavorite) {
+      removeFromFavorites(word);
+      return;
+    }
+    addToFavorites(word);
   }
 
-  if (isLoading) {
+  const isFavoriteLoading = isMutatingFavorite || isCheckingFavorite;
+
+  if (isLoadingWordDetails) {
     return <ScreenLoader />;
   }
 
   if (
-    error &&
-    error instanceof AxiosError &&
-    error.response &&
-    error.response.status === 404
+    wordDetailsError &&
+    wordDetailsError instanceof AxiosError &&
+    wordDetailsError.response &&
+    wordDetailsError.response.status === 404
   ) {
-    return <NotFound word={word} response={error.response} />;
+    return <NotFound word={word} response={wordDetailsError.response} />;
   }
 
-  if (!data || data.length === 0 || error) {
+  if (!data || data.length === 0 || wordDetailsError) {
     return (
       <WordDetailsError
         word={word}
@@ -77,15 +96,22 @@ export function WordDetailsScreen() {
               <TouchableOpacity
                 onPress={handleFavorite}
                 style={styles.favoriteButtonContainer}
+                disabled={isFavoriteLoading}
               >
-                <Ionicons
-                  name="heart"
-                  size={24}
-                  color={isFavorite ? "red" : "black"}
-                />
-                <Text style={styles.regular}>
-                  {isFavorite ? "Remove" : "Favorite"}
-                </Text>
+                {isFavoriteLoading ? (
+                  <ActivityIndicator size="small" color="red" />
+                ) : (
+                  <>
+                    <Ionicons
+                      name={isFavorite ? "heart" : "heart-outline"}
+                      size={24}
+                      color="red"
+                    />
+                    <Text style={styles.regular}>
+                      {isFavorite ? "Remover" : "Favoritar"}
+                    </Text>
+                  </>
+                )}
               </TouchableOpacity>
             )}
 
@@ -116,7 +142,7 @@ export function WordDetailsScreen() {
                     </Text>
                     {definition.example && (
                       <Text style={styles.italic}>
-                        Ex: {definition.example}
+                        e.g.: {definition.example}
                       </Text>
                     )}
                   </View>
