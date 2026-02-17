@@ -20,6 +20,9 @@ import { styles } from "./style";
 const SCROLL_TO_TOP_THRESHOLD = 200;
 
 export function WordsListScreen() {
+  const flatListRef = useRef<FlatList<WordResponse>>(null);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
+
   const {
     data,
     isLoading,
@@ -30,8 +33,6 @@ export function WordsListScreen() {
     refetch,
     isRefetching,
   } = useWords();
-
-  const flatListRef = useRef<FlatList<WordResponse>>(null);
 
   function handleScrollToTop() {
     flatListRef.current?.scrollToOffset({ offset: 0 });
@@ -51,7 +52,12 @@ export function WordsListScreen() {
     }
   }
 
-  const [showScrollToTop, setShowScrollToTop] = useState(false);
+  function renderFooter() {
+    if (isFetchingNextPage) {
+      return <FooterLoader />;
+    }
+    return null;
+  }
 
   if (isLoading) {
     return <ScreenLoader />;
@@ -100,7 +106,7 @@ export function WordsListScreen() {
         renderItem={({ item, index }) => (
           <WordItem word={item.word} index={index} />
         )}
-        ListFooterComponent={() => <FooterLoader />}
+        ListFooterComponent={renderFooter}
       />
     </>
   );
