@@ -5,6 +5,9 @@ const { width } = Dimensions.get("window");
 export const styles = StyleSheet.create({
   container: {
     width: (width - 32) / 3,
+  },
+  pressableContainer: {
+    flex: 1,
     paddingVertical: 10,
   },
   sideContainer: {

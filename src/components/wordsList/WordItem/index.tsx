@@ -17,7 +17,10 @@ export function WordItem({ word, index }: WordItemProps) {
 
   return (
     <View style={[styles.container, !isMiddleColumn && styles.sideContainer]}>
-      <TouchableOpacity onPress={() => router.push(`/word/${word}`)}>
+      <TouchableOpacity
+        style={styles.pressableContainer}
+        onPress={() => router.push(`/word/${word}`)}
+      >
         <Text numberOfLines={1} style={styles.word}>
           {word}
         </Text>
