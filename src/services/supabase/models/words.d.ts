@@ -6,4 +6,5 @@ export interface GetWordsParams {
 export interface WordResponse {
   id: number;
   word: string;
+  created_at: string;
 }

@@ -1,9 +1,5 @@
-import { Text, View } from "react-native";
+import { FavoritesScreen } from "@/screens/Favorites";
 
-export default function Favorites() {
-  return (
-    <View>
-      <Text>Favorites</Text>
-    </View>
-  );
+export default function FavoritesRoute() {
+  return <FavoritesScreen />;
 }
