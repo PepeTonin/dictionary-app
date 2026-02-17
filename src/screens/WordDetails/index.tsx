@@ -12,8 +12,8 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Button } from "@/components/common/Button";
+import { ScreenLoader } from "@/components/common/ScreenLoader";
 import { NotFound } from "@/components/wordDetails/NotFound";
-import { ScreenLoader } from "@/components/wordDetails/ScreenLoader";
 import { WordDetailsError } from "@/components/wordDetails/WordDetailsError";
 
 import { useFavoriteWord } from "@/hooks/favorites/useFavoriteWord";

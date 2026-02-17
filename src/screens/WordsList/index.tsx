@@ -15,6 +15,7 @@ import { WordResponse } from "@/services/supabase/models/words";
 
 import { WORDS_LIST_NUM_COLUMNS } from "@/constants/wordsList";
 
+import { ScreenLoader } from "@/components/common/ScreenLoader";
 import { styles } from "./style";
 
 const SCROLL_TO_TOP_THRESHOLD = 200;
@@ -46,7 +47,7 @@ export function WordsListScreen() {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   if (isLoading) {
-    return <></>;
+    return <ScreenLoader />;
   }
 
   return (

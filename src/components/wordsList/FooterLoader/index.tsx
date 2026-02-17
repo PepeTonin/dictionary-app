@@ -5,7 +5,7 @@ import { styles } from "./style";
 export function FooterLoader() {
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color="gray" />
+      <ActivityIndicator size="small" color="gray" />
     </View>
   );
 }
