@@ -1,16 +1,11 @@
-import { dictionaryClient } from "@/services/apis/dictionaryClient";
-import type { WordDetailResponse } from "@/services/supabase/models/wordDetail";
 import { useQuery } from "@tanstack/react-query";
+
+import { getWordDetail } from "@/services/apis/wordDetail";
 
 export function useWordDetail(word: string) {
   const { data, isLoading, error } = useQuery({
     queryKey: ["word", word],
-    queryFn: async () => {
-      const { data } = await dictionaryClient.get<WordDetailResponse[]>(
-        `/${word}`,
-      );
-      return data;
-    },
+    queryFn: async () => await getWordDetail(word),
   });
   return { data, isLoading, error };
 }
