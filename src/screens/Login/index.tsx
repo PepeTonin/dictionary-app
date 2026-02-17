@@ -13,6 +13,8 @@ import { useAuthStore } from "@/stores/authStore";
 
 import { styles } from "./style";
 
+const KEYBOARD_CONTENT_EXTRA_SPACE = 20;
+
 export function LoginScreen() {
   const router = useRouter();
 
@@ -53,7 +55,7 @@ export function LoginScreen() {
 
   return (
     <KeyboardAwareScrollView
-      extraKeyboardSpace={20}
+      extraKeyboardSpace={KEYBOARD_CONTENT_EXTRA_SPACE}
       keyboardShouldPersistTaps="handled"
       contentContainerStyle={styles.contentContainer}
     >

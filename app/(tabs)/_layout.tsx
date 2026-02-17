@@ -1,9 +1,11 @@
-import { Text } from "react-native";
-import { Tabs } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
+import { Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Header } from "@/components/common/Header";
+
+const TABS_BAR_HEIGHT = 60;
 
 export default function TabsLayout() {
   const titles = {
@@ -17,7 +19,7 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarStyle: { height: bottom + 60, paddingTop: 6 },
+        tabBarStyle: { height: bottom + TABS_BAR_HEIGHT, paddingTop: 6 },
       }}
     >
       <Tabs.Screen

@@ -13,6 +13,8 @@ import { useWords } from "@/hooks/useWords";
 
 import { WordResponse } from "@/services/supabase/models/words";
 
+import { WORDS_LIST_NUM_COLUMNS } from "@/constants/wordsList";
+
 import { styles } from "./style";
 
 const SCROLL_TO_TOP_THRESHOLD = 200;
@@ -56,7 +58,7 @@ export function WordsListScreen() {
         ref={flatListRef}
         data={data?.pages.flatMap((page) => page.map((word) => word)) || []}
         keyExtractor={(item) => item.id.toString()}
-        numColumns={3}
+        numColumns={WORDS_LIST_NUM_COLUMNS}
         onScroll={handleScroll}
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}

@@ -1,6 +1,8 @@
+import { useRouter } from "expo-router";
 import { Text, TouchableOpacity, View } from "react-native";
 
-import { useRouter } from "expo-router";
+import { WORDS_LIST_NUM_COLUMNS } from "@/constants/wordsList";
+
 import { styles } from "./style";
 
 interface WordItemProps {
@@ -10,10 +12,11 @@ interface WordItemProps {
 
 export function WordItem({ word, index }: WordItemProps) {
   const router = useRouter();
+
+  const isMiddleColumn = (index - 1) % WORDS_LIST_NUM_COLUMNS === 0;
+
   return (
-    <View
-      style={[styles.container, (index - 1) % 3 !== 0 && styles.sideContainer]}
-    >
+    <View style={[styles.container, !isMiddleColumn && styles.sideContainer]}>
       <TouchableOpacity onPress={() => router.push(`/word/${word}`)}>
         <Text numberOfLines={1} style={styles.word}>
           {word}
