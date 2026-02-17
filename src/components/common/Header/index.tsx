@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { StatusBar, StatusBarStyle } from "expo-status-bar";
 import { useState } from "react";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -14,9 +15,10 @@ type HeaderType = "showAuth" | "showClose" | "showBack";
 interface HeaderProps {
   type: HeaderType;
   title?: string;
+  statusBarStyle?: StatusBarStyle;
 }
 
-export function Header({ type, title }: HeaderProps) {
+export function Header({ type, title, statusBarStyle = "dark" }: HeaderProps) {
   const router = useRouter();
   const { top } = useSafeAreaInsets();
   const { isAuthenticated, logout } = useAuthStore();
@@ -59,24 +61,27 @@ export function Header({ type, title }: HeaderProps) {
   };
 
   return (
-    <View style={[styles.headerContainer, { paddingTop: top + 16 }]}>
-      {type !== "showClose" && !!title && (
-        <Text style={styles.headerTitle}>{title}</Text>
-      )}
-      <TouchableOpacity
-        disabled={isLoading}
-        onPress={mapAction[type]}
-        style={styles.buttonContainer}
-      >
-        {isLoading ? (
-          <ActivityIndicator size="small" color="black" />
-        ) : (
-          <Ionicons name={mapTypeToIcon[type]} size={24} color="black" />
+    <>
+      <StatusBar style={statusBarStyle} />
+      <View style={[styles.headerContainer, { paddingTop: top + 16 }]}>
+        {type !== "showClose" && !!title && (
+          <Text style={styles.headerTitle}>{title}</Text>
         )}
-        {type !== "showClose" && (
-          <Text style={styles.buttonText}>{mapButtonText[type]}</Text>
-        )}
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          disabled={isLoading}
+          onPress={mapAction[type]}
+          style={styles.buttonContainer}
+        >
+          {isLoading ? (
+            <ActivityIndicator size="small" color="black" />
+          ) : (
+            <Ionicons name={mapTypeToIcon[type]} size={24} color="black" />
+          )}
+          {type !== "showClose" && (
+            <Text style={styles.buttonText}>{mapButtonText[type]}</Text>
+          )}
+        </TouchableOpacity>
+      </View>
+    </>
   );
 }
