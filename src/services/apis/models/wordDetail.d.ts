@@ -26,6 +26,7 @@ export interface Meaning {
 
 export interface WordDetailResponse {
   word: string;
+  phonetic?: string;
   phonetics: Phonetic[];
   meanings: Meaning[];
   license: License;

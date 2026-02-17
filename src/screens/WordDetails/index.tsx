@@ -1,0 +1,187 @@
+import { Ionicons } from "@expo/vector-icons";
+import { AxiosError } from "axios";
+import { router, useLocalSearchParams } from "expo-router";
+import { useState } from "react";
+import {
+  Linking,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { Button } from "@/components/common/Button";
+import { NotFound } from "@/components/wordDetails/NotFound";
+import { ScreenLoader } from "@/components/wordDetails/ScreenLoader";
+import { WordDetailsError } from "@/components/wordDetails/WordDetailsError";
+
+import { useWordDetail } from "@/hooks/useWordDetail";
+
+import { styles } from "./style";
+
+export function WordDetailsScreen() {
+  const { bottom } = useSafeAreaInsets();
+  const { word } = useLocalSearchParams<{ word: string }>();
+  const { data, isLoading, error, refetch, isRefetching, canRefetch } =
+    useWordDetail(word);
+
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  function capitalizeFirstLetter(word: string) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
+  function handleFavorite() {
+    setIsFavorite(!isFavorite);
+  }
+
+  if (isLoading) {
+    return <ScreenLoader />;
+  }
+
+  if (
+    error &&
+    error instanceof AxiosError &&
+    error.response &&
+    error.response.status === 404
+  ) {
+    return <NotFound word={word} response={error.response} />;
+  }
+
+  if (!data || data.length === 0 || error) {
+    return (
+      <WordDetailsError
+        word={word}
+        canRefetch={canRefetch}
+        refetch={refetch}
+        isRefetching={isRefetching}
+      />
+    );
+  }
+
+  return (
+    <View style={[styles.outerContainer, { paddingBottom: bottom + 16 }]}>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        {data.map((item, index) => (
+          <View key={index} style={styles.wordContainer}>
+            <View style={styles.wordHeaderContainer}>
+              <Text style={styles.h1}>{item.word}</Text>
+
+              {item.phonetic && (
+                <Text style={styles.large}>{item.phonetic}</Text>
+              )}
+            </View>
+
+            {index === 0 && (
+              <TouchableOpacity
+                onPress={handleFavorite}
+                style={styles.favoriteButtonContainer}
+              >
+                <Ionicons
+                  name="heart"
+                  size={24}
+                  color={isFavorite ? "red" : "black"}
+                />
+                <Text style={styles.regular}>
+                  {isFavorite ? "Remove" : "Favorite"}
+                </Text>
+              </TouchableOpacity>
+            )}
+
+            {item.phonetics?.map((phonetic, pIndex) => {
+              if (!phonetic.text || !phonetic.audio) return null;
+              return (
+                <View key={pIndex}>
+                  <Text style={styles.regular}>{phonetic.text}</Text>
+                  <Text style={styles.regular}>
+                    TODO: implement MP3 Player with the link: {phonetic.audio}
+                  </Text>
+                </View>
+              );
+            })}
+
+            <Text style={styles.h2}>Meanings:</Text>
+
+            {item.meanings?.map((meaning, mIndex) => (
+              <View key={mIndex} style={styles.sectionContainer}>
+                <Text style={styles.bold}>
+                  {capitalizeFirstLetter(meaning.partOfSpeech)}
+                </Text>
+
+                {meaning.definitions.map((definition, dIndex) => (
+                  <View key={dIndex} style={styles.sectionItemContainer}>
+                    <Text style={styles.regular}>
+                      • {definition.definition}
+                    </Text>
+                    {definition.example && (
+                      <Text style={styles.italic}>
+                        Ex: {definition.example}
+                      </Text>
+                    )}
+                  </View>
+                ))}
+
+                {meaning.synonyms?.length > 0 && (
+                  <Text style={styles.regular}>
+                    <Text style={styles.bold}>Synonyms:</Text>{" "}
+                    {meaning.synonyms.join(", ")}
+                  </Text>
+                )}
+
+                {meaning.antonyms?.length > 0 && (
+                  <Text style={styles.regular}>
+                    <Text style={styles.bold}>Antonyms:</Text>{" "}
+                    {meaning.antonyms.join(", ")}
+                  </Text>
+                )}
+              </View>
+            ))}
+
+            {item.sourceUrls?.length > 0 && (
+              <View style={styles.sectionContainer}>
+                <Text style={styles.bold}>Sources:</Text>
+
+                {item.sourceUrls.map((source, sIndex) => (
+                  <TouchableOpacity
+                    key={sIndex}
+                    onPress={() => {
+                      Linking.openURL(source);
+                    }}
+                  >
+                    <Text key={sIndex} style={styles.link}>
+                      {source}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+          </View>
+        ))}
+      </ScrollView>
+
+      <View
+        style={{
+          paddingHorizontal: 16,
+          paddingTop: 4,
+          gap: 16,
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Button
+          type="outline"
+          label="Back"
+          onPress={router.back}
+          fullWidth={false}
+        />
+        <Button
+          type="primary"
+          label="Next Word"
+          onPress={() => {}}
+          fullWidth={false}
+        />
+      </View>
+    </View>
+  );
+}
