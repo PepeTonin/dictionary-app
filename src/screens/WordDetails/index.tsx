@@ -12,10 +12,10 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Button } from "@/components/common/Button";
 import { ScreenError } from "@/components/common/ScreenError";
 import { ScreenLoader } from "@/components/common/ScreenLoader";
 import { NotFound } from "@/components/wordDetails/NotFound";
+import { WordsButtons } from "@/components/wordDetails/WordsButtons";
 
 import { useFavoriteWord } from "@/hooks/favorites/useFavoriteWord";
 import { useIsWordFavorite } from "@/hooks/favorites/useIsWordFavorite";
@@ -28,7 +28,10 @@ import { styles } from "./style";
 
 export function WordDetailsScreen() {
   const { bottom } = useSafeAreaInsets();
-  const { word } = useLocalSearchParams<{ word: string }>();
+  const { word, id: wordId } = useLocalSearchParams<{
+    word: string;
+    id?: string;
+  }>();
 
   const { addToHistory } = useMutationHistory();
 
@@ -83,7 +86,9 @@ export function WordDetailsScreen() {
     wordDetailsError.response &&
     wordDetailsError.response.status === 404
   ) {
-    return <NotFound word={word} response={wordDetailsError.response} />;
+    return (
+      <NotFound word={word} response={wordDetailsError.response} id={wordId} />
+    );
   }
 
   if (!data || data.length === 0 || wordDetailsError) {
@@ -205,29 +210,10 @@ export function WordDetailsScreen() {
           </View>
         ))}
       </ScrollView>
-
-      <View
-        style={{
-          paddingHorizontal: 16,
-          paddingTop: 4,
-          gap: 16,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Button
-          type="outline"
-          label="Back"
-          onPress={router.back}
-          fullWidth={false}
-        />
-        <Button
-          type="primary"
-          label="Next Word"
-          onPress={() => {}}
-          fullWidth={false}
-        />
-      </View>
+      <WordsButtons
+        wordItem={{ word, id: wordId }}
+        style={styles.wordsButtonsContainer}
+      />
     </View>
   );
 }

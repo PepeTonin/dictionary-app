@@ -68,4 +68,7 @@ export const styles = StyleSheet.create({
     color: "blue",
     textDecorationLine: "underline",
   },
+  wordsButtonsContainer: {
+    paddingHorizontal: 16,
+  },
 });
