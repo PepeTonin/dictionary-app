@@ -1,6 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { AxiosError } from "axios";
 import { router, useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
 import {
   ActivityIndicator,
   Linking,
@@ -18,6 +19,7 @@ import { NotFound } from "@/components/wordDetails/NotFound";
 
 import { useFavoriteWord } from "@/hooks/favorites/useFavoriteWord";
 import { useIsWordFavorite } from "@/hooks/favorites/useIsWordFavorite";
+import { useMutationHistory } from "@/hooks/history/useMutationHistory";
 import { useWordDetail } from "@/hooks/useWordDetail";
 
 import { capitalizeFirstLetter } from "@/utils/string";
@@ -27,6 +29,14 @@ import { styles } from "./style";
 export function WordDetailsScreen() {
   const { bottom } = useSafeAreaInsets();
   const { word } = useLocalSearchParams<{ word: string }>();
+
+  const { addToHistory } = useMutationHistory();
+
+  useEffect(() => {
+    if (word) {
+      addToHistory(word);
+    }
+  }, [word, addToHistory]);
 
   const {
     data,
