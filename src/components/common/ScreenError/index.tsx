@@ -45,7 +45,10 @@ export function ScreenError({
   };
 
   return (
-    <View style={[styles.container, { paddingBottom: getPaddingBottom() }]}>
+    <View
+      testID="screen-error-container"
+      style={[styles.container, { paddingBottom: getPaddingBottom() }]}
+    >
       <View style={styles.textContainer}>
         <View style={styles.titleContainer}>
           {mapIcon[icon]}
