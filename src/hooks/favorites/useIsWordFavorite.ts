@@ -6,6 +6,7 @@ export function useIsWordFavorite(word: string) {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["isFavorite", word],
     queryFn: async () => await isFavoriteWord(word),
+    refetchOnWindowFocus: true,
   });
 
   return {

@@ -134,7 +134,7 @@ export function WordDetailsScreen() {
                       color="red"
                     />
                     <Text style={styles.regular}>
-                      {isFavorite ? "Remover" : "Favoritar"}
+                      {isFavorite ? "Remove" : "Favorite"}
                     </Text>
                   </>
                 )}
