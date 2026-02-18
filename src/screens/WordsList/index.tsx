@@ -104,7 +104,7 @@ export function WordsListScreen() {
         contentContainerStyle={styles.listContentContainer}
         columnWrapperStyle={styles.listColumnWrapperContainer}
         renderItem={({ item, index }) => (
-          <WordItem word={item.word} index={index} />
+          <WordItem word={item.word} index={index} id={item.id.toString()} />
         )}
         ListFooterComponent={renderFooter}
       />

@@ -8,9 +8,10 @@ import { styles } from "./style";
 interface WordItemProps {
   word: string;
   index: number;
+  id?: string;
 }
 
-export function WordItem({ word, index }: WordItemProps) {
+export function WordItem({ word, index, id }: WordItemProps) {
   const router = useRouter();
 
   const isMiddleColumn = (index - 1) % WORDS_LIST_NUM_COLUMNS === 0;
@@ -19,7 +20,7 @@ export function WordItem({ word, index }: WordItemProps) {
     <View style={[styles.container, !isMiddleColumn && styles.sideContainer]}>
       <TouchableOpacity
         style={styles.pressableContainer}
-        onPress={() => router.push(`/word/${word}`)}
+        onPress={() => router.push(`/word/${word}?id=${id}`)}
       >
         <Text numberOfLines={1} style={styles.word}>
           {word}
