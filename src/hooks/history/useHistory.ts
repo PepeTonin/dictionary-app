@@ -9,7 +9,6 @@ import {
 import { getHistory as getServerHistory } from "@/services/supabase/history";
 import { HistoryResponse } from "@/services/supabase/models/history";
 
-import { TEN_MINUTES } from "@/constants/times";
 import { useAuthStore } from "@/stores/authStore";
 
 const HISTORY_PAGE_LIMIT = 30;
@@ -125,8 +124,6 @@ export function useHistory() {
       return allPages.length + 1;
     },
     refetchOnWindowFocus: true,
-    staleTime: TEN_MINUTES,
-    cacheTime: TEN_MINUTES,
   });
 
   const invalidate = useCallback(() => {

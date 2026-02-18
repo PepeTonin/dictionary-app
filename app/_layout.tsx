@@ -8,11 +8,15 @@ import { Header } from "@/components/common/Header";
 
 import { useAuthStore } from "@/stores/authStore";
 
+const TEN_MINUTES = 1000 * 60 * 10;
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,
       refetchOnWindowFocus: false,
+      staleTime: TEN_MINUTES,
+      cacheTime: TEN_MINUTES,
     },
     mutations: {
       retry: false,
