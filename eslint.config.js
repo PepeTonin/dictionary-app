@@ -7,5 +7,18 @@ module.exports = defineConfig([
   eslintPluginPrettierRecommended,
   {
     ignores: ["dist/*"],
+    overrides: [
+      {
+        files: [
+          "**/*.test.*",
+          "**/*.spec.*",
+          "**/jest.setup.*",
+          "**/__tests__/**",
+        ],
+        env: {
+          jest: true,
+        },
+      },
+    ],
   },
 ]);
