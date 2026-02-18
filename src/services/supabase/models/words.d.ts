@@ -8,3 +8,8 @@ export interface WordResponse {
   word: string;
   created_at: string;
 }
+
+export interface WordByIdResponse {
+  id: number;
+  word: string;
+}
