@@ -1,5 +1,9 @@
+import {
+  favoriteWord,
+  removeFavoriteWord,
+} from "@/services/supabase/favorites";
 import { FavoriteErrors } from "@/services/supabase/models/favoriteErros";
-import { favoriteWord, removeFavoriteWord } from "@/services/supabase/words";
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Toast } from "toastify-react-native";
 

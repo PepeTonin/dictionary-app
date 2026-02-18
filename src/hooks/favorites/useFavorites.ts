@@ -1,4 +1,4 @@
-import { getFavorites } from "@/services/supabase/words";
+import { getFavorites } from "@/services/supabase/favorites";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 const FAVORITES_LIMIT = 30;

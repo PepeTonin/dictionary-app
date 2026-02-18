@@ -1,4 +1,4 @@
-import { isFavoriteWord } from "@/services/supabase/words";
+import { isFavoriteWord } from "@/services/supabase/favorites";
 import { useQuery } from "@tanstack/react-query";
 
 export function useIsWordFavorite(word: string) {
