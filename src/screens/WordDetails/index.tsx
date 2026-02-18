@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { AudioPlayer } from "@/components/common/AudioPlayer";
 import { ScreenError } from "@/components/common/ScreenError";
 import { ScreenLoader } from "@/components/common/ScreenLoader";
 import { NotFound } from "@/components/wordDetails/NotFound";
@@ -143,11 +144,9 @@ export function WordDetailsScreen() {
             {item.phonetics?.map((phonetic, pIndex) => {
               if (!phonetic.text || !phonetic.audio) return null;
               return (
-                <View key={pIndex}>
+                <View key={pIndex} style={styles.audioPlayerContainer}>
                   <Text style={styles.regular}>{phonetic.text}</Text>
-                  <Text style={styles.regular}>
-                    TODO: implement MP3 Player with the link: {phonetic.audio}
-                  </Text>
+                  <AudioPlayer audioSource={phonetic.audio} />
                 </View>
               );
             })}

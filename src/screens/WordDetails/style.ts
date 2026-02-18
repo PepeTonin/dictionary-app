@@ -35,6 +35,9 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "flex-end",
   },
+  audioPlayerContainer: {
+    gap: 8,
+  },
   sectionContainer: {
     gap: 4,
   },
