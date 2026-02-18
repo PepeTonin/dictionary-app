@@ -15,6 +15,7 @@ See the full document here:
 
 ## Table of Contents
 
+- [🎥 Demo Videos](#-demo-videos)
 - [✨ About the Project](#-about-the-project)
 - [📱 Features](#-features)
 - [🔐 Authentication & Data Rules](#-authentication--data-rules)
@@ -25,6 +26,19 @@ See the full document here:
 - [📁 Project Structure](#-project-structure)
 - [🧪 Testing Strategy](#-testing-strategy-wip)
 - [👨‍💻 Author](#-author)
+
+---
+
+## 🎥 Demo Videos
+
+The videos below present a full walkthrough of the project.  
+All videos are narrated in Brazilian Portuguese (PT-BR) by me.
+
+- [Project Overview](https://drive.google.com/file/d/14EKRxdTqzmHfW3E8voQlTmBb6_UTp7vt/view?usp=drive_link)
+
+- [iOS Demo](https://drive.google.com/file/d/1NDk3I60K-qoUHQv3wtlvD4NPyq0GeRH9/view?usp=drive_link)
+
+- [Android Demo](https://drive.google.com/file/d/1xUI9Ug1QYum7sF46z0lnKd4I3eiCq9T5/view?usp=drive_link)
 
 ---
 
