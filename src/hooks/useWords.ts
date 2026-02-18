@@ -1,5 +1,5 @@
-import { getWords } from "@/services/supabase/words";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { getWordById, getWordId, getWords } from "@/services/supabase/words";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 export function useWords() {
   const {
@@ -19,6 +19,7 @@ export function useWords() {
     getNextPageParam: (lastPage, pages) =>
       lastPage.length > 0 ? pages.length + 1 : undefined,
   });
+
   return {
     data,
     isLoading,
@@ -28,5 +29,49 @@ export function useWords() {
     isFetchingNextPage,
     refetch,
     isRefetching,
+  };
+}
+
+async function getCurrentWordId(word: string) {
+  const wordId = await getWordId(word);
+  if (!wordId) {
+    throw new Error("Word not found");
+  }
+  return wordId.id;
+}
+
+export function useNextWord(wordItem: { word: string; id?: number }) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["nextWord", wordItem.word],
+    queryFn: async () => {
+      let wordId = wordItem.id;
+      if (!wordId) {
+        wordId = await getCurrentWordId(wordItem.word);
+      }
+      return await getWordById(wordId + 1);
+    },
+  });
+
+  return {
+    data,
+    isLoading,
+  };
+}
+
+export function usePreviousWord(wordItem: { word: string; id?: number }) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["previousWord", wordItem.word],
+    queryFn: async () => {
+      let wordId = wordItem.id;
+      if (!wordId) {
+        wordId = await getCurrentWordId(wordItem.word);
+      }
+      return await getWordById(wordId - 1);
+    },
+  });
+
+  return {
+    data,
+    isLoading,
   };
 }

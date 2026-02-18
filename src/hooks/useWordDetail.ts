@@ -9,6 +9,7 @@ export function useWordDetail(word: string) {
       queryFn: async () => await getWordDetail(word),
     },
   );
+
   return {
     data,
     isLoading,
