@@ -1,12 +1,14 @@
-import { isFavoriteWord } from "@/services/supabase/favorites";
 import { useQuery } from "@tanstack/react-query";
+
+import { TEN_MINUTES } from "@/constants/times";
+import { isFavoriteWord } from "@/services/supabase/favorites";
 
 export function useIsWordFavorite(word: string) {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["isFavorite", word],
-    queryFn: () => isFavoriteWord(word),
-    enabled: !!word,
-    // staleTime: 1000 * 60 * 5, // todo: review app requests caching logic
+    queryFn: async () => await isFavoriteWord(word),
+    staleTime: TEN_MINUTES,
+    cacheTime: TEN_MINUTES,
   });
 
   return {

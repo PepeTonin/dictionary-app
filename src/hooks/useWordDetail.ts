@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { TEN_MINUTES } from "@/constants/times";
 import { getWordDetail } from "@/services/apis/wordDetail";
 
 export function useWordDetail(word: string) {
@@ -7,6 +8,8 @@ export function useWordDetail(word: string) {
     {
       queryKey: ["word", word],
       queryFn: async () => await getWordDetail(word),
+      staleTime: TEN_MINUTES,
+      cacheTime: TEN_MINUTES,
     },
   );
 

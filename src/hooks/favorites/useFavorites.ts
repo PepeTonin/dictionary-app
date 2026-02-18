@@ -1,5 +1,7 @@
-import { getFavorites } from "@/services/supabase/favorites";
 import { useInfiniteQuery } from "@tanstack/react-query";
+
+import { TEN_MINUTES } from "@/constants/times";
+import { getFavorites } from "@/services/supabase/favorites";
 
 const FAVORITES_LIMIT = 30;
 
@@ -21,6 +23,8 @@ export function useFavorites() {
     getNextPageParam: (lastPage, pages) =>
       lastPage.length > 0 ? pages.length + 1 : undefined,
     refetchOnWindowFocus: true,
+    staleTime: TEN_MINUTES,
+    cacheTime: TEN_MINUTES,
   });
 
   return {

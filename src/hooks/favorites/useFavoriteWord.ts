@@ -11,7 +11,7 @@ export function useFavoriteWord() {
   const queryClient = useQueryClient();
 
   const addMutation = useMutation({
-    mutationFn: (word: string) => favoriteWord(word),
+    mutationFn: async (word: string) => await favoriteWord(word),
     onSuccess: () => {
       Toast.success("Word added to favorites");
       queryClient.invalidateQueries({ queryKey: ["favorites"] });
@@ -31,7 +31,7 @@ export function useFavoriteWord() {
   });
 
   const removeMutation = useMutation({
-    mutationFn: (word: string) => removeFavoriteWord(word),
+    mutationFn: async (word: string) => await removeFavoriteWord(word),
     onSuccess: () => {
       Toast.success("Word removed from favorites");
       queryClient.invalidateQueries({ queryKey: ["favorites"] });

@@ -1,6 +1,8 @@
 import { getWordById, getWordId, getWords } from "@/services/supabase/words";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
+import { TEN_MINUTES } from "@/constants/times";
+
 export function useWords() {
   const {
     data,
@@ -18,6 +20,8 @@ export function useWords() {
     },
     getNextPageParam: (lastPage, pages) =>
       lastPage.length > 0 ? pages.length + 1 : undefined,
+    staleTime: TEN_MINUTES,
+    cacheTime: TEN_MINUTES,
   });
 
   return {
@@ -50,6 +54,8 @@ export function useNextWord(wordItem: { word: string; id?: number }) {
       }
       return await getWordById(wordId + 1);
     },
+    staleTime: TEN_MINUTES,
+    cacheTime: TEN_MINUTES,
   });
 
   return {
@@ -68,6 +74,8 @@ export function usePreviousWord(wordItem: { word: string; id?: number }) {
       }
       return await getWordById(wordId - 1);
     },
+    staleTime: TEN_MINUTES,
+    cacheTime: TEN_MINUTES,
   });
 
   return {
