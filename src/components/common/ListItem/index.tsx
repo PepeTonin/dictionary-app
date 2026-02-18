@@ -1,14 +1,19 @@
 import { Ionicons } from "@expo/vector-icons";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
-import { WordResponse } from "@/services/supabase/models/words";
 import { formatDateToUS } from "@/utils/date";
 
 import { styles } from "./style";
 
+export interface ListItemData {
+  id: string | number;
+  word: string;
+  created_at: string;
+}
+
 interface ListItemProps {
   type: "favorite" | "history";
-  item: WordResponse;
+  item: ListItemData;
   onItemPress: () => void;
   onIconPress: (word: string) => void;
   isLoading: boolean;
