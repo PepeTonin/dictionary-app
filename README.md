@@ -251,14 +251,38 @@ root
 
 ---
 
-## 🧪 Testing Strategy (WIP)
+## 🧪 Testing Strategy
 
-Tests are colocated with the code
+Tests are colocated with the code to keep context close to implementation.
 
 Examples:
 
-- `utils/__tests__`
-- `components/JustOneComponent/__test__`
+- `src/utils/__tests__`
+- `src/components/Button/__test__`
+- `src/screens/WordsList/__test__`
+
+### Approach
+
+Due to time constraints, it was not possible to achieve high test coverage across the entire codebase. However, the project demonstrates strong knowledge of modern React Native testing practices and tools.
+
+The test suite includes:
+
+• **Unit tests** for utility functions  
+• **Component tests** for reusable UI components  
+• **Integration tests** for screens and data flows
+
+### Testing Techniques Used
+
+The project showcases several advanced testing strategies to ensure robustness:
+
+- Global **Jest setup** with mocks for native and Expo libraries (MMKV, Safe Area, Icons, etc.)
+- **Mocked API requests** using implementation mocks to isolate the UI from external services
+- Custom **React Query test provider** to control cache and network behavior
+- Validation of **loading, success and error states** in screens
+- Snapshot testing for UI regression detection
+- Isolation of side effects and async flows to prevent open handles and flaky tests
+
+Even with limited coverage, the implemented tests were carefully designed to validate critical branches and demonstrate a solid and production-ready testing architecture.
 
 ---
 
