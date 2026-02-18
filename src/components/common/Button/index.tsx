@@ -47,6 +47,7 @@ export function Button({
 
   return (
     <TouchableOpacity
+      testID="button-container"
       style={[
         styles.container,
         fullWidth ? styles.fullWidthContainer : styles.flexContainer,
@@ -58,11 +59,17 @@ export function Button({
     >
       {isLoading ? (
         <ActivityIndicator
+          testID="button-loading-indicator"
           size="small"
           color={type === "primary" ? "white" : "black"}
         />
       ) : (
-        <Text style={[styles.label, mapTypeToStyleLabel[type]]}>{label}</Text>
+        <Text
+          testID="button-label"
+          style={[styles.label, mapTypeToStyleLabel[type]]}
+        >
+          {label}
+        </Text>
       )}
     </TouchableOpacity>
   );
